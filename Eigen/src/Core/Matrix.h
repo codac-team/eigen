@@ -297,7 +297,7 @@ class Matrix : public PlainObjectBase<Matrix<Scalar_, Rows_, Cols_, Options_, Ma
    *
    * \sa Matrix(const Scalar& a0, const Scalar& a1, const Scalar& a2,  const Scalar& a3, const ArgTypes&... args)
    */
-  EIGEN_DEVICE_FUNC explicit constexpr EIGEN_STRONG_INLINE Matrix(
+  EIGEN_DEVICE_FUNC /*explicit*/ constexpr EIGEN_STRONG_INLINE Matrix(
       const std::initializer_list<std::initializer_list<Scalar>>& list)
       : Base(list) {}
 
