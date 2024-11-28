@@ -11,6 +11,8 @@
 #ifndef EIGEN_IO_H
 #define EIGEN_IO_H
 
+#include <iomanip>
+
 // IWYU pragma: private
 #include "./InternalHeaderCheck.h"
 
@@ -179,18 +181,25 @@ std::ostream& print_matrix(std::ostream& s, const Derived& _m, const IOFormat& f
   for (Index i = 0; i < m.rows(); ++i) {
     if (i) s << fmt.rowSpacer;
     s << fmt.rowPrefix;
+    
+    std::stringstream sstr;
+    sstr.copyfmt(s);
+    sstr << static_cast<PrintType>(m.coeff(i, 0));
     if (width) {
       s.fill(fmt.fill);
       s.width(width);
     }
-    s << static_cast<PrintType>(m.coeff(i, 0));
+    s << sstr.str();
+
     for (Index j = 1; j < m.cols(); ++j) {
       s << fmt.coeffSeparator;
+      sstr.str(std::string());
+      sstr << static_cast<PrintType>(m.coeff(i, j));
       if (width) {
         s.fill(fmt.fill);
         s.width(width);
       }
-      s << static_cast<PrintType>(m.coeff(i, j));
+      s << sstr.str();
     }
     s << fmt.rowSuffix;
     if (i < m.rows() - 1) s << fmt.rowSeparator;
